@@ -22,28 +22,24 @@ const data = computed(() => store.state.dashboard.data);
           <div class="row">
             <!-- Dashboard Card -->
             <div class="col-md-4 col-sm-6 col-12">
-              <DashboardCard
-                title="Total Pekerjaan"
-                :count="data.job"
-                icon="bi-briefcase-fill"
-              />
+              <DashboardCard title="Total Pekerjaan" :count="data.job" icon="bi-briefcase-fill" />
             </div>
 
             <div class="col-md-4 col-sm-6 col-12">
-              <DashboardCard
-                title="Total Perusahaan"
-                :count="data.company"
-                icon="bi-building"
-              />
+              <DashboardCard title="Total Perusahaan" :count="data.company" icon="bi-building" />
             </div>
 
             <div class="col-md-4 col-sm-6 col-12">
-              <DashboardCard
-                title="Total Pengguna"
-                :count="data.user"
-                icon="bi-people-fill"
-              />
+              <DashboardCard title="Total Pengguna" :count="data.user" icon="bi-people-fill" />
             </div>
+
+            <!-- <div class="col-md-4 col-sm-6 col-12">
+              <DashboardCard
+                title="Total Diskusi Forum"
+                :count="data.forum"
+                icon="bi-person-badge"
+              />
+            </div> -->
 
             <!-- End Dashboard Card -->
           </div>

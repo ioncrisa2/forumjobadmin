@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({
+defineProps({
   title: String,
   count: Number,
   icon: String,
@@ -9,7 +9,7 @@ const props = defineProps({
 <template>
   <div class="card info-card sales-card">
     <div class="card-body">
-      <h5 class="card-title">{{ props.title }}</h5>
+      <h5 class="card-title">{{ title }}</h5>
 
       <div class="d-flex align-items-center">
         <div
@@ -21,10 +21,10 @@ const props = defineProps({
             justify-content-center
           "
         >
-          <i class="bi" :class="props.icon"></i>
+          <i class="bi" :class="icon"></i>
         </div>
         <div class="ps-3">
-          <h6>{{ props.count }}</h6>
+          <h6>{{ count }}</h6>
         </div>
       </div>
     </div>

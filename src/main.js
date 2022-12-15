@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import { BootstrapVue3 } from 'bootstrap-vue-3';
 import './style.css';
 import App from './App.vue';
 import router from './router.js';
@@ -7,6 +8,7 @@ import store from './store/index.js';
 const app = createApp(App);
 app.use(router);
 app.use(store);
+app.use(BootstrapVue3);
 
 app.mixin({
     methods:{
@@ -18,6 +20,10 @@ app.mixin({
             }
 
             return word.join(" ");
+        },
+        formatDate(string){
+            const date = new Date(string);
+            return date.toLocaleDateString('id-ID', { year: "numeric", month: "long", day: "numeric" });
         }
     }
 });
