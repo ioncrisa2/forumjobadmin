@@ -33,14 +33,6 @@ const data = computed(() => store.state.dashboard.data);
               <DashboardCard title="Total Pengguna" :count="data.user" icon="bi-people-fill" />
             </div>
 
-            <!-- <div class="col-md-4 col-sm-6 col-12">
-              <DashboardCard
-                title="Total Diskusi Forum"
-                :count="data.forum"
-                icon="bi-person-badge"
-              />
-            </div> -->
-
             <!-- End Dashboard Card -->
           </div>
         </div>
