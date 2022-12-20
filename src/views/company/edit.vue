@@ -66,6 +66,11 @@
                                     </div>
                                 </div>
 
+                                <div class="mb-3">
+                                    <label for="website" class="form-label">Website</label>
+                                    <input type="text" class="form-control" v-model="company.website_url">
+                                </div>
+
                                 <div class="d-grid gap-1 d-md-flex justify-content-md-start">
                                     <router-link :to="{name: 'company'}" class="btn btn-secondary me-md-2" type="button">Kembali</router-link>
                                     <button class="btn btn-primary" type="submit">Edit</button>
@@ -110,7 +115,7 @@ const company = reactive({
 });
 
 onMounted(async () => {
-    await store.dispatch("company/getCompanyData",route.params.id);
+    await store.dispatch("company/getCompanyData", route.params.id);
     company.name = store.state.company.company.name;
     company.description = store.state.company.company.description;
     company.field = store.state.company.company.company_field;
@@ -124,7 +129,7 @@ onMounted(async () => {
     title.value = store.state.company.company.name;
 });
 
-async function submitEdit(){
+async function submitEdit() {
 
     let submitedForm = {
         name: company.name,
@@ -139,25 +144,25 @@ async function submitEdit(){
         zip_code: company.zip
     }
 
-    await store.dispatch('company/updateCompany',{
-        companyId: route.params.id,
+    await store.dispatch('company/updateCompany', {
+        id: route.params.id,
         data: submitedForm
     })
-    .then(() => {
-        Swal.fire({
-            title: 'BERHASIL!',
-            text: "Data Berhasil Diupdate!",
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 1000
-        })
+        .then(() => {
+            Swal.fire({
+                title: 'BERHASIL!',
+                text: "Data Berhasil Diupdate!",
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1000
+            })
 
-        router.push({name: 'company'});
-    })
-    .catch(error => {
-        validation.value = error.response.data;
-        console.log(validation);
-    });
+            router.push({ name: 'company' });
+        })
+        .catch(error => {
+            validation.value = error.response.data;
+            console.log(validation);
+        });
 }
 
 

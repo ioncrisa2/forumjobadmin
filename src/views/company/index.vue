@@ -9,10 +9,10 @@
               <div class="row">
                 <div class="col-8">
 
-                    <button type="button" class="btn btn-primary btn-sm" @click="showModal">
-                      <i class="fas fa-plus-square"></i> Tambah
-                    </button>
-                    
+                  <button type="button" class="btn btn-primary btn-sm" @click="showModal">
+                    <i class="fas fa-plus-square"></i> Tambah
+                  </button>
+
                 </div>
 
                 <Modal title="Data Baru Perusahaan" ref="thisModal">
@@ -91,46 +91,35 @@
                   </template>
                 </Modal>
 
-
-                <div class="col-4">
-                  <div class="d-flex justify-content-end">
-                    <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Search Here" v-model="search"
-                        @keypress.enter="searchData" />
-                      <button class="btn btn-outline-secondary" type="button" @click="searchData">
-                        <i class="bi bi-search"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
                 <div class="col-12 mt-2 rounded-lg">
                   <table id="table" class="table table-bordered table-hover">
                     <thead>
                       <tr>
-                        <th>No</th>
                         <th>Nama Perusahaan</th>
                         <th>Alamat</th>
-                        <th colspan="2">Website Perusahaan</th>
+                        <th>Website Perusahaan</th>
+                        <th>Actions</th>
+                        <!-- <th>Actions</th> -->
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(company, index) in companies.data" :key="companies.id">
-                        <td>{{ index + 1 }}.</td>
+                      <tr v-for="(company, index) in companies" :key="companies.id">
                         <td>{{ company.name }}</td>
                         <td>{{ company.location.street_address }}</td>
                         <td>
-                          <a :href="urlHelper(company.website_url)" target="_blank">
-                            <span v-if="(company.website_url == null)" class="badge rounded-pill text-bg-secondary">
-                              <i class="bi bi-globe"></i> Belum Tersedia
-                            </span>
-                            <span v-else class="badge rounded-pill text-bg-dark">
+                          <span v-if="(company.website_url == null)" class="badge rounded-pill text-bg-secondary">
+                            <i class="bi bi-globe"></i> Belum Tersedia
+                          </span>
+                          <a v-else :href="urlHelper(company.website_url)" target="_blank">
+                            <span class="badge rounded-pill text-bg-dark">
                               <i class="bi bi-globe"></i> {{ company.website_url }}
                             </span>
                           </a>
                         </td>
                         <td>
                           <div class="btn-group">
-                            <router-link :to="{name: 'company.edit', params:{id: company.id}}" class="btn btn-sm btn-primary">
+                            <router-link :to="{ name: 'company.edit', params: { id: company.id } }"
+                              class="btn btn-sm btn-primary">
                               <i class="bi bi-eye-fill"></i>
                             </router-link>
                             <button class="btn btn-sm btn-danger" @click="deleteCompany(company.id)">
@@ -158,16 +147,36 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import Modal from "@/components/Modal.vue";
+import "jquery/dist/jquery.js";
+import "datatables.net-bs5/js/dataTables.bootstrap5";
+import "datatables.net-bs5/css/dataTables.bootstrap5.min.css";
+import $ from "jquery";
+
 
 const store = useStore();
 const router = useRouter();
-
-store.dispatch("company/getCompaniesData");
-
-const companies = computed(() => store.getters['company/getAllCompanies']);
+const companies = ref([]);
 let validation = reactive([]);
-let search = ref('');
 const thisModal = ref(false);
+const showModal = () => thisModal.value.show();
+const closeModal = () => thisModal.value.close();
+const urlHelper = (url) => `https://${url}`;
+
+onMounted(async () => {
+  document.title = "Daftar Perusahaan | Admin";
+  await store.dispatch("company/getCompaniesData")
+    .then((response) => {
+      companies.value = response;
+      setTimeout(() => {
+        $("#table").DataTable({
+          lengthMenu: [5, 10, 20, 50, 100, 200, 500],
+          language: { emptyTable: "Data belum tersedia!!" }
+        });
+      })
+    })
+
+});
+
 const storeCompany = reactive({
   name: "",
   description: "",
@@ -179,25 +188,7 @@ const storeCompany = reactive({
   city: "",
   state: "",
   zip: ""
-});
-
-onMounted(() => {
-  document.title = "Daftar Perusahaan | Admin";
-});
-
-const showModal = () => thisModal.value.show();
-const closeModal = () => thisModal.value.close();
-const urlHelper = (url) => `https://${url}`;
-
-function searchData() {
-  store.commit("/company/SET_PAGE", 1);
-  store.dispatch("company/getCompaniesData", search.value);
-}
-
-function changePage(page) {
-  store.commit("/company/SET_PAGE", page);
-  store.dispatch("company/getCompaniesData", search.value);
-}
+})
 
 function resetModal() {
   Object.assign(storeCompany, {
@@ -240,9 +231,7 @@ async function submitForm() {
         timer: 1500
       });
 
-      router.push({
-        name: "company"
-      })
+      router.go();
     }).catch(error => {
       console.log(validation);
       validation = error.response.data;

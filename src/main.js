@@ -4,11 +4,13 @@ import './style.css';
 import App from './App.vue';
 import router from './router.js';
 import store from './store/index.js';
+import { Bootstrap5Pagination } from 'laravel-vue-pagination';
 
 const app = createApp(App);
 app.use(router);
 app.use(store);
 app.use(BootstrapVue3);
+app.component('Pagination',Bootstrap5Pagination);
 
 app.mixin({
     methods:{

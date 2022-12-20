@@ -39,12 +39,10 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="select" class="form-label">Pilih Perusahaan</label>
-                                                <select class="form-select" v-model="value">
-                                                    <option value="" disabled selected>Pilih Nama Perusahaan</option>
-                                                    <option v-for="company in companies.data" :value="company.id">
-                                                        {{ company.name }}
-                                                    </option>
-                                                </select>
+                                                <MultiSelect v-model="company" label="name" :options="companies"
+                                                    open-direction="bottom" :searchable="true" track-by="id"
+                                                    placeholder="Pilih satu nama perusahaan">
+                                                </MultiSelect>
                                             </div>
                                             <div class="mb-3">
                                                 <div class="h5 text-dark mt-2">
@@ -76,30 +74,21 @@
                                     </Modal>
 
                                 </div>
-                                <div class="col-4">
-                                    <div class="d-flex justify-content-end">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search Here" />
-                                            <button class="btn btn-outline-secondary" type="button">
-                                                <i class="bi bi-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div class="col-12 mt-2 rounded-lg">
-                                    <table id="table" class="table table-bordered table-hover">
+                                    <table id="data" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
                                                 <th>Pekerjaan</th>
                                                 <th>Perusahaan</th>
                                                 <th>Poster</th>
-                                                <th colspan="2">Batas Akhir Lamar</th>
+                                                <th>Batas Akhir Lamar</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(job, index) in jobs.data" :key="jobs.id">
+                                            <tr v-for="(job, index) in jobs" :key="job.id">
                                                 <td>{{ index + 1 }}</td>
                                                 <td>{{ job.job_name }}</td>
                                                 <td>{{ job.company.name }}</td>
@@ -126,6 +115,7 @@
 
                                 </div>
 
+
                             </div>
                         </div>
                     </div>
@@ -134,36 +124,58 @@
         </section>
     </div>
 </template>
+
+<script>
+import MultiSelect from 'vue-multiselect';
+export default {
+    components: { MultiSelect }
+}
+</script>
+
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue';
 import Modal from "@/components/Modal.vue";
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import Swal from "sweetalert2";
+import "jquery/dist/jquery.js";
+import "datatables.net-bs5/js/dataTables.bootstrap5";
+import "datatables.net-bs5/css/dataTables.bootstrap5.min.css";
+import $ from "jquery";
 
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const value = ref('');
-
-store.dispatch("job/getJobsData");
-
-onMounted(async () => {
-    document.title = "Daftar Pekerjaan | Admin";
-    await store.dispatch("company/getCompaniesData");
-});
-
-const jobs = computed(() => store.getters["job/getJobsData"]);
-const companies = computed(() => store.getters["company/getAllCompanies"]);
+const companies = ref([]);
+const company = ref({});
+const jobs = ref([]);
 const imagePreviewURL = ref(null);
-
 const thisModal = ref(false);
-const showModal = () => thisModal.value.show();
-const closeModal = () => thisModal.value.close();
 const posterPreview = ref(null);
 const poster = ref(null);
 let typeCount = ref(1);
 let typeValues = ref({});
+const showModal = () => thisModal.value.show();
+const closeModal = () => thisModal.value.close();
+const addField = () => typeCount.value++;
+const removeField = () => typeCount.value--;
+
+onMounted(async () => {
+    document.title = "Daftar Pekerjaan | Admin";
+    await store.dispatch("job/getJobsData")
+        .then((response) => {
+            jobs.value = response;
+            setTimeout(() => {
+                $("#data").DataTable({
+                    lengthMenu: [5, 10, 20, 50, 100, 200, 500],
+                    language: { emptyTable: "Data belum tersedia!!" }
+                });
+            })
+        });
+    await store.dispatch("company/getCompaniesData")
+        .then((response) => companies.value = response);
+});
 
 const storeJob = reactive({
     job_name: '',
@@ -173,9 +185,6 @@ const storeJob = reactive({
     poster: ''
 });
 
-const addField = () => typeCount.value++;
-const removeField = () => typeCount.value--;
-
 async function submit() {
     let formData = new FormData();
 
@@ -183,7 +192,7 @@ async function submit() {
     formData.append('job_description', storeJob.job_description);
     formData.append('end_date', storeJob.end_date);
     formData.append('poster', storeJob.poster);
-    formData.append('company_id', value.value);
+    formData.append('company_id', company.value.id);
 
     let values = Object.values(typeValues.value);
 
@@ -194,7 +203,6 @@ async function submit() {
     await store.dispatch("job/storeJobData", formData)
         .then(() => {
             closeModal();
-
             Swal.fire({
                 title: "Success!!",
                 text: "Data berhasil ditambahkan!!",
@@ -233,24 +241,24 @@ function deleteJob(id) {
         confirmButtonText: 'YA, HAPUS!',
         cancelButtonText: 'TIDAK',
         reverseButtons: !0
-    })
-        .then(async (result) => {
-            if (result.isConfirmed) {
-                await store.dispatch("job/deleteJobData", id)
-                    .then(() => {
-
-                        Swal.fire({
-                            title: 'BERHASIL!',
-                            text: "Data Berhasil Dihapus!",
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
-                        router.go();
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            await store.dispatch("job/deleteJobData", id)
+                .then(() => {
+                    Swal.fire({
+                        title: 'BERHASIL!',
+                        text: "Data Berhasil Dihapus!",
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1000
                     });
-            }
-        })
+                    router.go();
+                });
+        }
+    });
 }
 
-
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.css">
+
+</style>

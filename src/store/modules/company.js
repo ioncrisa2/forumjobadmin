@@ -22,19 +22,17 @@ const company = {
     },
 
     actions:{
-        getCompaniesData({commit,state}, page){
-            let search = page ? page : '';
-
+        getCompaniesData({commit}){
             return new Promise((resolve, reject) => {
-                Api.get(`/company?q=${search}&page=${state.page}`)
+                Api.get('/company')
                     .then((response) => {
                         commit('SET_COMPANIES_DATA',response.data.data);
 
-                        resolve();
-                    })
+                        resolve(response.data.data);
+                    });
             });
         },
-        getCompanyData({commit,state}, id) {
+        getCompanyData({commit}, id) {
             return new Promise((resolve, reject) => {
                 Api.get(`/company/${id}`)
                     .then((response) => {
@@ -58,9 +56,9 @@ const company = {
                     });
             })
         },
-        updateCompany({dispatch}, {companyId,data}){
+        updateCompany({dispatch}, {id,data}){
             return new Promise((resolve,reject) => {
-                Api.put(`/company/${companyId}`, data)
+                Api.put(`/company/${id}`, data)
                     .then(() => {
                         dispatch("getCompaniesData");
                         resolve();

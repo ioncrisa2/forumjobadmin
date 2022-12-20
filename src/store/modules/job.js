@@ -19,14 +19,12 @@ const job = {
         }
     },
     actions:{
-        getJobsData({commit,state}, page){
-            let search = page ? page : '';
-
+        getJobsData({commit}){
             return new Promise((resolve, reject) => {
                 Api.get('/jobs')
                     .then((response) => {
                         commit('SET_JOBS_DATA',response.data.data);
-                        resolve();
+                        resolve(response.data.data);
                     })
             });
         },
