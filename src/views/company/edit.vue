@@ -5,8 +5,14 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="card-title"> <i class="bi bi-building"></i> Detail Data {{ title }}</h3>
+                            <h3 class="card-title"> 
+                                <router-link :to="{name: 'company'}">
+                                    <i class="bi bi-arrow-left-square-fill"></i>
+                                </router-link> |
+                                <i class="bi bi-buildings"></i> Detail Data Perusahaan
+                                <strong><u>{{ title }}</u></strong>
 
+                            </h3>
                             <hr>
 
                             <form @submit.prevent="submitEdit">
@@ -71,8 +77,7 @@
                                     <input type="text" class="form-control" v-model="company.website_url">
                                 </div>
 
-                                <div class="d-grid gap-1 d-md-flex justify-content-md-start">
-                                    <router-link :to="{name: 'company'}" class="btn btn-secondary me-md-2" type="button">Kembali</router-link>
+                                <div class="d-grid gap-1 d-md-flex justify-content-md-end">
                                     <button class="btn btn-primary" type="submit">Edit</button>
                                 </div>
 

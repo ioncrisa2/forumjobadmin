@@ -156,17 +156,19 @@ function onFileChange(e) {
 onMounted(async () => {
     await store.dispatch("job/getJobData", route.params.id);
     await store.dispatch("company/getCompaniesData");
-    let jobState = store.state.job.job;
-    job.job_name = jobState.job_name;
-    job.job_description = jobState.job_description;
-    job.end_date = jobState.end_date;
-    job.company_id = jobState.company;
-    job.poster = jobState.poster;
-    title.value = jobState.job_name;
+    job.job_name = store.state.job.job.job_name;
+    job.job_description = store.state.job.job.job_description;
+    job.end_date = store.state.job.job.end_date;
+    job.company_id = store.state.job.job.company;
+    job.poster = store.state.job.job.poster;
+    title.value = store.state.job.job.job_name;
     companies.value = await store.state.company.companies.data;
-    company.value = await jobState.company;
-    typeData.value = await jobState.types;
+    company.value = await store.state.job.job.company;
+    typeData.value = await store.state.job.job.types;
     count.value = typeData.value.length;
+    console.log(company.value);
+    console.log(companies.value);
+    console.log(typeData.value);
 });
 
 function updateValueData(event) {
