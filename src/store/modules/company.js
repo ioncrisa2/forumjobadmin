@@ -26,7 +26,7 @@ const company = {
             return new Promise((resolve, reject) => {
                 Api.get('/company')
                     .then((response) => {
-                        commit('SET_COMPANIES_DATA',response.data.data);
+                        commit('SET_COMPANIES_DATA',response.data);
 
                         resolve(response.data.data);
                     });
