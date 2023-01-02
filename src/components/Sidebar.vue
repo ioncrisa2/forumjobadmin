@@ -1,9 +1,10 @@
 <script setup>
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import Swal from "sweetalert2";
 
 const router = useRouter();
+const route = useRoute();
 const store = useStore();
 
 const navigation = [
@@ -57,7 +58,7 @@ function logout() {
       <li v-if="item.to.name === 'dashboard'" class="nav-heading">Dashboard</li>
       <li v-if="item.to.name === 'company'" class="nav-heading">Menu</li>
       <li v-if="item.to.name === 'profile'" class="nav-heading">Account</li>
-      <router-link class="nav-link" :class="[this.$route.name === item.to.name ? '' : 'collapsed']" :to="item.to">
+      <router-link class="nav-link" :class="[route.name === item.to.name ? '' : 'collapsed']" :to="item.to">
         <i class="bi" :class="item.icons"></i>
         <span>{{ item.name }}</span>
       </router-link>
