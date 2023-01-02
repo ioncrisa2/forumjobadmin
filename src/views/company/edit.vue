@@ -162,7 +162,7 @@ async function submitEdit() {
                 timer: 1000
             })
 
-            router.push({ name: 'company' });
+            router.go();
         })
         .catch(error => {
             validation.value = error.response.data;

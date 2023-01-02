@@ -210,7 +210,7 @@ async function submit() {
             timer: 1000
         })
 
-        router.push({ name: 'job' });
+        router.go();
     }).catch(error => {
         console.log(error);
     })
