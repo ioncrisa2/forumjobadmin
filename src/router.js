@@ -15,8 +15,6 @@ const routes = [
       {path:"/profile",name:"profile",component:() => import("@/views/profile/index.vue")}
     ]
   },
-  {path:"/job",name:"job",component:() => import("@/views/job/index.vue")},
-  {path:"/company",name:"company",component: () => import("@/views/company/index.vue")},
   { path:'/login',name:'login',component:() => import('@/views/auth/login.vue') },
   { path:'/404',name:'notfound',component:() => import('@/views/NotFound.vue') }
 ];
