@@ -3,7 +3,10 @@ import router from './router';
 import store from './store';
 
 const Api = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api'
+    baseURL: 'https://forumandjobserver.info/api',
+    headers:{
+        'Access-Control-Allow-Origin': '*'
+    }
 });
 
 Api.interceptors.request.use(config => {
