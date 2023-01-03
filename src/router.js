@@ -9,7 +9,7 @@ const routes = [
     meta:{requiresAuth:true},
     children:[
       {path:"/dashboard",name:"dashboard",component:() => import("@/views/dashboard/index.vue")},
-      {path:"/company",nane:"company",component:() => import("@/views/company/index.vue")},
+      {path:"/company",name:"company",component: () => import("@/views/company/index.vue")},
       {path:"/company/:id",name:"company.edit",component: () => import("@/views/company/edit.vue")},
       {path:"/job",name:"job",component:() => import("@/views/job/index.vue")},
       {path:"/job/:id",name:"job.edit",component: () => import("@/views/job/edit.vue")},
