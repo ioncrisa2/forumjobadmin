@@ -261,7 +261,7 @@ function deleteCompany(id) {
               showConfirmButton: false,
               timer: 1000
             });
-            router.push('/company');
+            router.go();
           });
       }
     })
