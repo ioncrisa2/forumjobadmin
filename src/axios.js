@@ -4,10 +4,9 @@ import store from './store';
 
 const Api = axios.create({
     baseURL: 'https://forumandjobserver.info/api',
-    headers:{
-        'Access-Control-Allow-Origin': '*'
-    }
 });
+
+// https://forumandjobserver.info/api
 
 Api.interceptors.request.use(config => {
     config.headers.Authorization = `Bearer ${store.getters['auth/getToken']}`;
