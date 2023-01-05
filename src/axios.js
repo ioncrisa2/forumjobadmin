@@ -4,6 +4,10 @@ import store from './store';
 
 const Api = axios.create({
     baseURL: 'https://forumandjobserver.info/api',
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
 });
 
 // https://forumandjobserver.info/api
