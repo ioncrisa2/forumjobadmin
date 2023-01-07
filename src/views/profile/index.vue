@@ -85,7 +85,7 @@ function updatePassword() {
         </form>
       </div>
 
-      <div class="col-lg-6 col-md-12">
+      <!-- <div class="col-lg-6 col-md-12">
         <form @submit.prevent="updatePassword">
           <div class="card">
             <div class="card-header">
@@ -130,7 +130,7 @@ function updatePassword() {
             </div>
           </div>
         </form>
-      </div>
+      </div> -->
 
     </div>
   </section>
