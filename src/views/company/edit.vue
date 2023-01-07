@@ -23,7 +23,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="description" class="form-label">Nama Perusahaan</label>
+                                    <label for="description" class="form-label">Deskripsi Perusahaan</label>
                                    <textarea v-model="company.description" class="form-control"></textarea>
                                 </div>
 
