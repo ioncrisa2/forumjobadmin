@@ -105,7 +105,7 @@
                     <tbody>
                       <tr v-for="(company, index) in companies" :key="companies.id">
                         <td>{{ company.name }}</td>
-                        <td>{{ company.location.street_address }}</td>
+                        <td width="100">{{ company.location.street_address }}</td>
                         <td>
                           <span v-if="(company.website_url == null)" class="badge rounded-pill text-bg-secondary">
                             <i class="bi bi-globe"></i> Belum Tersedia
