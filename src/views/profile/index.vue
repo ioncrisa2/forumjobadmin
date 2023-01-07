@@ -24,7 +24,7 @@ onMounted(() => {
   if (data) Object.assign(user, data);
 });
 
-const enableEdit = () => edit.value = !edit.value;
+// const enableEdit = () => edit.value = !edit.value;
 
 function update() {
   console.log(user);
@@ -47,7 +47,7 @@ function updatePassword() {
             <div class="card-header">
               <div class="d-grid d-md-flex justify-content-between">
                 <h6>Data Pengguna</h6>
-                <div class="d-grid d-md-flex align-content-center justify-content-end gap-2">
+                <!-- <div class="d-grid d-md-flex align-content-center justify-content-end gap-2">
                   <div v-if="edit == true">
                     <button type="submit" class="btn btn-primary btn-sm">
                       <i class="fas fa-save"></i> Save
@@ -58,7 +58,7 @@ function updatePassword() {
                     <i class="far" :class="[edit === false ? 'fa-edit' : 'fa-window-close']"></i>
                     {{ edit === false ? 'Edit' : 'Cancel' }}
                   </button>
-                </div>
+                </div> -->
               </div>
             </div>
             <div class="card-body p-3">
@@ -66,23 +66,16 @@ function updatePassword() {
               <div class="row g-3">
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <input type="text" name="email" class="form-control" :disabled="!edit" v-model="user.email"
-                      id="email" placeholder="Enter Email Here">
+                    <input type="text" name="email" class="form-control" disabled v-model="user.email" id="email"
+                      placeholder="Enter Email Here">
                     <label for="email">Alamat Email</label>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <input type="text" name="username" class="form-control" :disabled="!edit" v-model="user.username"
+                    <input type="text" name="username" class="form-control" disabled v-model="user.username"
                       id="username" placeholder="Enter Username Here">
                     <label for="username">Nama Pengguna</label>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-floating">
-                    <input type="text" name="status" disabled class="form-control" :disabled="!edit"
-                      v-model="user.status">
-                    <label for="floatingName">Status</label>
                   </div>
                 </div>
               </div>
@@ -118,9 +111,9 @@ function updatePassword() {
                   <div class="form-floating">
 
                     <div class="mb-3">
-                    <label for="password_new" class="form-label">Password Baru</label>
-                    <input type="password" v-model="password.new" class="form-control" id="password_new" />
-                  </div>
+                      <label for="password_new" class="form-label">Password Baru</label>
+                      <input type="password" v-model="password.new" class="form-control" id="password_new" />
+                    </div>
 
                   </div>
                 </div>
