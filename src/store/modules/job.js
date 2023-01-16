@@ -38,8 +38,9 @@ const job = {
             });
         },
         storeJobData({dispatch}, data){
+            Api.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
             return new Promise((resolve, reject) => {
-                Api.post('/jobs', data)
+                Api.post('/jobs/', data)
                     .then(() => {
                         dispatch('getJobsData');
                         resolve();
@@ -49,7 +50,7 @@ const job = {
         },
         updateJobData({dispatch}, {id, data}){
             return new Promise((resolve, reject) => {
-                Api.post(`/jobs/${id}`, data)
+                Api.post(`/jobs/${id}/`, data)
                     .then(() => {
                         dispatch("getJobsData");
                         resolve();
@@ -58,7 +59,7 @@ const job = {
         },
         deleteJobData({dispatch},id){
             return new Promise((resolve, reject) => {
-                Api.delete(`/jobs/${id}`)
+                Api.delete(`/jobs/${id}/`)
                     .then(() => {
                         dispatch('getJobsData');
                         resolve();
