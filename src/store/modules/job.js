@@ -38,7 +38,6 @@ const job = {
             });
         },
         storeJobData({dispatch}, data){
-            Api.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
             return new Promise((resolve, reject) => {
                 Api.post('/jobs', data)
                     .then(() => {
