@@ -24,7 +24,7 @@ const company = {
     actions:{
         getCompaniesData({commit}){
             return new Promise((resolve, reject) => {
-                Api.get('/company')
+                Api.get('/companies')
                     .then((response) => {
                         commit('SET_COMPANIES_DATA',response.data);
 
@@ -34,7 +34,7 @@ const company = {
         },
         getCompanyData({commit}, id) {
             return new Promise((resolve, reject) => {
-                Api.get(`/company/${id}`)
+                Api.get(`/companies/${id}`)
                     .then((response) => {
                         commit('SET_COMPANY_DATA', response.data.data);
                         resolve();
@@ -46,7 +46,7 @@ const company = {
         },
         storeCompanyData({dispatch}, data){
             return new Promise((resolve, reject) => {
-                Api.post('/company',data)
+                Api.post('/companies',data)
                     .then(() => {
                         dispatch('getCompaniesData');
                         resolve();
@@ -58,7 +58,7 @@ const company = {
         },
         updateCompany({dispatch}, {id,data}){
             return new Promise((resolve,reject) => {
-                Api.put(`/company/${id}`, data)
+                Api.put(`/companies/${id}`, data)
                     .then(() => {
                         dispatch("getCompaniesData");
                         resolve();
@@ -67,7 +67,7 @@ const company = {
         },
         deleteCompanyData({dispatch},id){
             return new Promise((resolve,reject) => {
-                Api.delete(`/company/${id}`)
+                Api.delete(`/companies/${id}`)
                     .then(() => {
                         dispatch('getCompaniesData');
                         resolve();
