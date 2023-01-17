@@ -239,6 +239,7 @@ async function submitForm() {
 }
 
 function deleteCompany(id) {
+  console.log(id);
   Swal.fire({
     title: 'APAKAH ANDA YAKIN ?',
     text: "INGIN MENGHAPUS DATA INI !",
@@ -252,6 +253,7 @@ function deleteCompany(id) {
   })
     .then(async (result) => {
       if (result.isConfirmed) {
+
         await store.dispatch("company/deleteCompanyData", id)
           .then(() => {
             Swal.fire({
