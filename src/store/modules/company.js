@@ -47,9 +47,9 @@ const company = {
         storeCompanyData({dispatch}, data){
             return new Promise((resolve, reject) => {
                 Api.post('/companies',data)
-                    .then(() => {
+                    .then((response) => {
                         dispatch('getCompaniesData');
-                        resolve();
+                        resolve(response);
                     })
                     .catch( error => {
                         reject(error);
@@ -59,18 +59,18 @@ const company = {
         updateCompany({dispatch}, {id,data}){
             return new Promise((resolve,reject) => {
                 Api.put(`/companies/${id}`, data)
-                    .then(() => {
+                    .then((response) => {
                         dispatch("getCompaniesData");
-                        resolve();
+                        resolve(response);
                     }).catch(error => reject(error));
             });
         },
         deleteCompanyData({dispatch},id){
             return new Promise((resolve,reject) => {
                 Api.delete(`/companies/${id}`)
-                    .then(() => {
+                    .then((response) => {
                         dispatch('getCompaniesData');
-                        resolve();
+                        resolve(response);
                     })
                     .catch(error => {
                         reject(error);
