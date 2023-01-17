@@ -254,6 +254,7 @@ function deleteCompany(id) {
       if (result.isConfirmed) {
         await store.dispatch("company/deleteCompanyData", id)
           .then(() => {
+            router.go();
             Swal.fire({
               title: 'BERHASIL!',
               text: "Data Berhasil Dihapus!",
@@ -262,7 +263,6 @@ function deleteCompany(id) {
               timer: 1000
             });
           });
-        router.push({ path: 'company' });
       }
     })
 }
