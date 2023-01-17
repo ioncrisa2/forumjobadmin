@@ -263,7 +263,7 @@ function deleteCompany(id) {
               showConfirmButton: false,
               timer: 1000
             });
-            router.push({ name: "company" });
+            router.go();
           });
       }
     })
