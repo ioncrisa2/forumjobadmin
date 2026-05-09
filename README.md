@@ -1,7 +1,41 @@
-# Vue 3 + Vite
+# ForumJob Admin
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+ForumJob Admin is the administrator dashboard for managing the ForumJob platform.  
+This application is built to help administrators manage job postings, company data, users, dashboard statistics, and platform content through a web-based interface.
 
-## Recommended IDE Setup
+## Features
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- Admin dashboard overview
+- Job vacancy management
+- Company data management
+- User data management
+- Data table interface
+- API integration with ForumJob backend
+- Form validation and alert confirmation
+- Responsive admin interface
+
+## Tech Stack
+
+- Vue 3
+- Vite
+- Vue Router
+- Vuex
+- Axios
+- Bootstrap 5
+- Bootstrap Vue 3
+- DataTables
+- SweetAlert2
+
+## Requirements
+
+- Node.js
+- Yarn or npm
+- ForumJob backend API
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/ioncrisa2/forumjobadmin.git
+cd forumjobadmin
